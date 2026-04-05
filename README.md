@@ -1,81 +1,118 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/1PuxbblI)
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=23399517&assignment_repo_type=AssignmentRepo)
-# Group Project Repository 
+# Project Name
 
-Welcome to CS494: Agentic AI **Group Project repository**   
+Multi-Agent Trading Intelligence System
 
-This repository is for your **_project submission and milestone tracking_**.
+## Team Members
 
-- You may develop your code elsewhere (e.g., in your personal GitHub repositories), but you must commit and push your code here regularly to track progress and meet the scheduled check-ins or milestones.
-- You may also develop directly in this repository, committing your work as you progress.
-
-We have three remaining milestones related to code submission. Please make sure that your code is updated and pushed to the repository for each milestone:
-    1. Proposal
-    2. Project check-in
-    3. Final Code Submission
-> _Note_: No late submissions are allowed for the **project related** submission. 
----
-## Project Overview
-
-Each team is tasked with designing and implementing a multi-agent system (MAS). Your project should demonstrate how multiple agents interact, coordinate, or solve a problem as a system.  
-
----
-
-## Submission Guidelines
-
-1. **Code Submission:**  
-   - You may submit your code at any stage of development in this repository.  
-   - Ensure that your "final working code" is complete and available here by the submission deadline.  
-
-2. **Documentation:**  
-   - You are expected to replace this `README.md` with a professional project README.  
-   - Your README should include:  
-     - Team members’ names  
-     - Project description  
-     - Clear instructions on how to run the code  
-
-3. **Instructions on Running the Code:**  
-   Your README must clearly explain:  
-   - Environment requirements (e.g., Python version, Node.js, libraries)  
-   - Installation steps (e.g., `pip install -r requirements.txt`)  
-   - How to execute the code (commands, scripts, or examples)  
-   - Example input/output (if applicable)  
-
----
-
-## Example README Structure (for reference)
-
-Below is an example of how a professional README might be structured. **You are expected to write your own professional and complete README for your project.**
+- Sanjana Uppalike - suppa17
 
 
-### Project Name
-Multi-Agent Task Coordinator
+## Description
 
-### Team Members
-- Alice Andrews (alice123)  - project lead, agentic design
-- Bob McKinsey (bob456) - backend development, system integration
-- Charles Ken (charles789) - Testing, documentation 
+This project implements a **multi-agent trading intelligence system** that analyzes financial markets using specialized agents and combines their reasoning into a unified, explainable trading decision.
 
-### Description
-This project implements a multi-agent task coordination system in which agents communicate to allocate tasks efficiently and resolve conflicts dynamically.
+Instead of relying on a single model or a single source of information, the system decomposes the problem into multiple **signal-specific agents**, where each agent is responsible for a different dimension of market analysis. The current system includes:
+- a **Technical Analyst** for price- and momentum-based signals,
+- a **Fundamental Analyst** for company financial health and long-term valuation signals,
+- a **News + Sentiment Analyst** for external information flow using recency-weighted news and sentiment analysis.
 
-### Requirements
-- Python 3.10+  
-- Packages: `numpy`, `networkx`  
+These agents run in parallel and feed into a **Chain-of-Thought (CoT) Synthesis Agent**, which aggregates their outputs, identifies agreement or conflict across signals, and produces a final interpretable market view.
 
-### Installation
-Run the following commands:
+The broader target architecture also includes memory, debate, risk management, trader decisioning, and reflection layers for building a more robust and adaptive trading pipeline.
 
-```bash
-git clone https://github.com/<team-repo>/<project>.git
-cd <project>
-pip install -r requirements.txt
+## Architecture
 
-```
-### Running the project
-```
-python main.py
+### Architecture Diagram
+
+<!-- Insert architecture image here -->
+![Architecture Diagram](path/to/architecture-image.png)
+
+### High-Level Architecture
+
+```text
+Input Ticker
+    │
+    ▼
+Memory Agent
+    │
+    ▼
+Parallel Analyst Layer
+    ├── Technical Analyst
+    ├── Fundamental Analyst
+    └── News + Sentiment Analyst
+    │
+    ▼
+CoT Synthesis Agent
+    │
+    ▼
+Debate Layer
+    ├── Bull Researcher
+    ├── Bear Researcher
+    └── Neutral Arbiter
+    │
+    ▼
+Trader Agent + Risk Manager
+    │
+    ▼
+Reflection + Memory Update
 ```
 
-### Results / Demo (optional)
-...
+## Current Implementation
+
+The following components are currently implemented:
+
+### Technical Analyst
+- fetches historical market data
+- computes indicators such as RSI, MACD, Bollinger Bands, VWAP, and volume-based signals
+- generates a technical analysis report using an LLM
+
+### Fundamental Analyst
+- fetches structured company data from EDGAR
+- analyzes revenue, earnings, assets, liabilities, and equity trends
+- generates a fundamental analysis report using an LLM
+
+### News + Sentiment Analyst
+- uses Alpha Vantage news sentiment data
+- applies recency weighting so newer news has more impact
+- aggregates sentiment across articles
+- generates a combined external-signal report using an LLM
+
+### CoT Synthesis Agent
+- combines outputs from all currently implemented analyst agents
+- produces a final synthesis across technical, fundamental, and news/sentiment signals
+
+### Parallel Execution with LangGraph
+- analyst agents are executed concurrently
+- outputs are routed into the synthesis layer
+
+## Future Implementations
+
+The following components are planned as part of the full architecture:
+
+### Memory Agent
+- retrieves past decisions and outcomes for the same ticker
+- injects relevant historical context into the pipeline
+
+### Debate Layer
+- Bull Researcher
+- Bear Researcher
+- Neutral Arbiter to score and resolve conflicting views
+
+### Trader Agent
+- converts synthesized reasoning into a final rating such as Buy, Hold, or Sell
+- assigns a conviction score
+
+### Risk Manager
+- evaluates market regime and volatility conditions
+- adjusts final recommendations based on risk context
+
+### Reflection Agent
+- evaluates post-decision outcomes after a fixed horizon
+- generates post-mortem analysis
+- updates long-term memory for future runs
+
+### Persistence and API Layer
+- decisions database
+- history endpoint
+- scheduler for multi-ticker watchlists
+- notification and monitoring support
