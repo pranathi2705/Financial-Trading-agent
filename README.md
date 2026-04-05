@@ -5,6 +5,7 @@ Multi-Agent Trading Intelligence System
 ## Team Members
 
 - Sanjana Uppalike - suppa17
+- Pranathi Kamisetty - Pkami
 
 
 ## Description
