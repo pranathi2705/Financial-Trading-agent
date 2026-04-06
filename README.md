@@ -24,7 +24,7 @@
 
 ---
 
-## 📌 Description
+## Description
 
 This project implements a **multi-agent trading intelligence system** that analyzes financial markets using specialized agents and combines their reasoning into a unified, explainable trading decision.
 
@@ -40,7 +40,7 @@ The broader target architecture also includes memory, debate, risk management, t
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ### Architecture Diagram
 
@@ -60,11 +60,11 @@ Memory Agent
 ┌─────────────────────────────────────────────────────────┐
 │               Parallel Analyst Layer                    │
 │                                                         │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  │
-│  │  Technical   │  │ Fundamental  │  │    News +    │  │
-│  │   Analyst    │  │   Analyst    │  │  Sentiment   │  │
-│  │  [yfinance]  │  │ [SEC EDGAR]  │  │[AlphaVantage]│  │
-│  └──────────────┘  └──────────────┘  └──────────────┘  │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐   │
+│  │  Technical   │  │ Fundamental  │  │    News +    │   │
+│  │   Analyst    │  │   Analyst    │  │  Sentiment   │   │
+│  │  [yfinance]  │  │ [SEC EDGAR]  │  │[AlphaVantage]│   │
+│  └──────────────┘  └──────────────┘  └──────────────┘   │
 └─────────────────────────────────────────────────────────┘
 │
 ▼
@@ -76,16 +76,16 @@ produces a provisional bias)
 ┌─────────────────────────────────────────────────────────┐
 │                    Debate Layer                         │
 │                                                         │
-│  ┌────────────┐  ←debate rounds→  ┌────────────┐       │
-│  │    Bull    │                   │    Bear    │       │
-│  │ Researcher │                   │ Researcher │       │
-│  └────────────┘                   └────────────┘       │
+│  ┌────────────┐  ←debate rounds→  ┌────────────┐        │
+│  │    Bull    │                   │    Bear    │        │
+│  │ Researcher │                   │ Researcher │        │
+│  └────────────┘                   └────────────┘        │
 │            ↓ (after debate ends)                        │
-│  ┌──────────────────────────────────────────────────┐  │
-│  │  Neutral Arbiter                                 │  │
-│  │  (reads final bull + bear output, scores         │  │
-│  │  argument quality, flags contradictions)         │  │
-│  └──────────────────────────────────────────────────┘  │
+│  ┌──────────────────────────────────────────────────┐   │
+│  │  Neutral Arbiter                                 │   │
+│  │  (reads final bull + bear output, scores         │   │
+│  │  argument quality, flags contradictions)         │   │
+│  └──────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────┘
 │
 ▼
@@ -191,6 +191,13 @@ LLM_MODEL=gemini-2.5-flash
 GOOGLE_API_KEY=your_google_api_key
 ALPHAVANTAGE_API_KEY=your_alpha_vantage_api_key
 ```
+> *Note:* You need an [Alpha Vantage API key](https://www.alphavantage.co/support/#api-key) for the news/sentiment analyst. The system supports multiple LLM providers — use whichever you prefer:
+> 
+>| Provider | LLM_PROVIDER value | Key to add |
+> |:---------|:---------------------|:-----------|
+> | Google Gemini (default) | google | GOOGLE_API_KEY from [Google AI Studio](https://aistudio.google.com/) |
+> | OpenAI | openai | OPENAI_API_KEY from [OpenAI](https://platform.openai.com/api-keys) |
+> | Anthropic | anthropic | ANTHROPIC_API_KEY from [Anthropic Console](https://console.anthropic.com/) |
 
 ### ▶️ Running the Project
 
@@ -199,7 +206,7 @@ Run the system with a ticker symbol:
 ```bash
 python main.py AAPL
 ```
-
+Replace AAPL with any valid ticker symbol (e.g., TSLA, MSFT, NVDA, GOOG)
 ---
 
 ## 🔮 Future Implementations
