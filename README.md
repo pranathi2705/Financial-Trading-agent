@@ -51,40 +51,61 @@ The broader target architecture also includes memory, debate, risk management, t
 
 ```
 Input Ticker
-     │
-     ▼
- Memory Agent
-     │
-     ▼
+│
+▼
+Memory Agent
+(injects past decision history into analyst prompts)
+│
+▼
 ┌─────────────────────────────────────────────────────────┐
 │               Parallel Analyst Layer                    │
 │                                                         │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐   │
-│  │  Technical   │  │ Fundamental  │  │    News +    │   │
-│  │   Analyst    │  │   Analyst    │  │  Sentiment   │   │
-│  │              │  │              │  │   Analyst    │   │
-│  │  [yfinance]  │  │ [SEC EDGAR]  │  │[AlphaVantge] │   │
-│  └──────────────┘  └──────────────┘  └──────────────┘   │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  │
+│  │  Technical   │  │ Fundamental  │  │    News +    │  │
+│  │   Analyst    │  │   Analyst    │  │  Sentiment   │  │
+│  │  [yfinance]  │  │ [SEC EDGAR]  │  │[AlphaVantage]│  │
+│  └──────────────┘  └──────────────┘  └──────────────┘  │
 └─────────────────────────────────────────────────────────┘
-     │
-     ▼
- CoT Synthesis Agent
-     │
-     ▼
+│
+▼
+CoT Synthesis Node
+(aggregates reports, identifies agreement and conflict,
+produces a provisional bias)
+│
+▼
 ┌─────────────────────────────────────────────────────────┐
 │                    Debate Layer                         │
 │                                                         │
-│   ┌──────────────┐  ┌──────────────┐  ┌─────────────┐   │
-│   │     Bull     │  │     Bear     │  │   Neutral   │   │
-│   │  Researcher  │  │  Researcher  │  │   Arbiter   │   │
-│   └──────────────┘  └──────────────┘  └─────────────┘   │
+│  ┌────────────┐  ←debate rounds→  ┌────────────┐       │
+│  │    Bull    │                   │    Bear    │       │
+│  │ Researcher │                   │ Researcher │       │
+│  └────────────┘                   └────────────┘       │
+│            ↓ (after debate ends)                        │
+│  ┌──────────────────────────────────────────────────┐  │
+│  │  Neutral Arbiter                                 │  │
+│  │  (reads final bull + bear output, scores         │  │
+│  │  argument quality, flags contradictions)         │  │
+│  └──────────────────────────────────────────────────┘  │
 └─────────────────────────────────────────────────────────┘
-     │
-     ▼
- Trader Agent + Risk Manager
-     │
-     ▼
- Reflection + Memory Update
+│
+▼
+Trader Agent
+(sees bull + bear arguments and arbiter verdict,
+outputs rating + conviction score 1–5)
+│
+▼
+Risk Manager
+(market regime check, volatility flag,
+may adjust or override decision)
+│
+▼
+Final Decision
+(Buy / Overweight / Hold / Underweight / Sell)
+│
+▼
+Reflection + Memory Update
+(stores decision to SQLite, fires at T+5 trading days
+to check outcome, writes post-mortem back to memory DB)
 ```
 
 ---
