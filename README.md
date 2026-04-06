@@ -24,7 +24,7 @@
 
 ---
 
-## 📌 Description
+## Description
 
 This project implements a **multi-agent trading intelligence system** that analyzes financial markets using specialized agents and combines their reasoning into a unified, explainable trading decision.
 
@@ -40,7 +40,7 @@ The broader target architecture also includes memory, debate, risk management, t
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ### Architecture Diagram
 
@@ -51,40 +51,61 @@ The broader target architecture also includes memory, debate, risk management, t
 
 ```
 Input Ticker
-     │
-     ▼
- Memory Agent
-     │
-     ▼
+│
+▼
+Memory Agent
+(injects past decision history into analyst prompts)
+│
+▼
 ┌─────────────────────────────────────────────────────────┐
 │               Parallel Analyst Layer                    │
 │                                                         │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐   │
 │  │  Technical   │  │ Fundamental  │  │    News +    │   │
 │  │   Analyst    │  │   Analyst    │  │  Sentiment   │   │
-│  │              │  │              │  │   Analyst    │   │
-│  │  [yfinance]  │  │ [SEC EDGAR]  │  │[AlphaVantge] │   │
+│  │  [yfinance]  │  │ [SEC EDGAR]  │  │[AlphaVantage]│   │
 │  └──────────────┘  └──────────────┘  └──────────────┘   │
 └─────────────────────────────────────────────────────────┘
-     │
-     ▼
- CoT Synthesis Agent
-     │
-     ▼
+│
+▼
+CoT Synthesis Node
+(aggregates reports, identifies agreement and conflict,
+produces a provisional bias)
+│
+▼
 ┌─────────────────────────────────────────────────────────┐
 │                    Debate Layer                         │
 │                                                         │
-│   ┌──────────────┐  ┌──────────────┐  ┌─────────────┐   │
-│   │     Bull     │  │     Bear     │  │   Neutral   │   │
-│   │  Researcher  │  │  Researcher  │  │   Arbiter   │   │
-│   └──────────────┘  └──────────────┘  └─────────────┘   │
+│  ┌────────────┐  ←debate rounds→  ┌────────────┐        │
+│  │    Bull    │                   │    Bear    │        │
+│  │ Researcher │                   │ Researcher │        │
+│  └────────────┘                   └────────────┘        │
+│                        ↓ (after debate ends)            │
+│  ┌──────────────────────────────────────────────────┐   │
+│  │                Neutral Arbiter                   │   │
+│  │  (reads final bull + bear output, scores         │   │
+│  │  argument quality, flags contradictions)         │   │
+│  └──────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────┘
-     │
-     ▼
- Trader Agent + Risk Manager
-     │
-     ▼
- Reflection + Memory Update
+│
+▼
+Trader Agent
+(sees bull + bear arguments and arbiter verdict,
+outputs rating + conviction score 1–5)
+│
+▼
+Risk Manager
+(market regime check, volatility flag,
+may adjust or override decision)
+│
+▼
+Final Decision
+(Buy / Overweight / Hold / Underweight / Sell)
+│
+▼
+Reflection + Memory Update
+(stores decision to SQLite, fires at T+5 trading days
+to check outcome, writes post-mortem back to memory DB)
 ```
 
 ---
@@ -170,6 +191,13 @@ LLM_MODEL=gemini-2.5-flash
 GOOGLE_API_KEY=your_google_api_key
 ALPHAVANTAGE_API_KEY=your_alpha_vantage_api_key
 ```
+> *Note:* You need an [Alpha Vantage API key](https://www.alphavantage.co/support/#api-key) for the news/sentiment analyst. The system supports multiple LLM providers — use whichever you prefer:
+> 
+>| Provider | LLM_PROVIDER value | Key to add |
+> |:---------|:---------------------|:-----------|
+> | Google Gemini (default) | google | GOOGLE_API_KEY from [Google AI Studio](https://aistudio.google.com/) |
+> | OpenAI | openai | OPENAI_API_KEY from [OpenAI](https://platform.openai.com/api-keys) |
+> | Anthropic | anthropic | ANTHROPIC_API_KEY from [Anthropic Console](https://console.anthropic.com/) |
 
 ### ▶️ Running the Project
 
@@ -178,6 +206,7 @@ Run the system with a ticker symbol:
 ```bash
 python main.py AAPL
 ```
+Replace AAPL with any valid ticker symbol (e.g., TSLA, MSFT, NVDA, GOOG)
 
 ---
 
