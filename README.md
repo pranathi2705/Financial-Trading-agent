@@ -207,6 +207,7 @@ Run the system with a ticker symbol:
 python main.py AAPL
 ```
 Replace AAPL with any valid ticker symbol (e.g., TSLA, MSFT, NVDA, GOOG)
+
 ---
 
 ## 🔮 Future Implementations
