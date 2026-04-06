@@ -40,6 +40,29 @@ The broader target architecture also includes memory, debate, risk management, t
 
 ---
 
+---
+
+## Input / Output
+
+### Input
+
+The system accepts any valid stock ticker symbol as input.
+```bash
+python main.py AAPL
+python main.py TSLA
+python main.py NVDA
+```
+
+Any publicly traded ticker supported by yfinance and Alpha Vantage will work.
+
+### Output
+
+The system produces a structured synthesis report covering technical, fundamental, and news + sentiment signals, with a final market bias, confidence level, and key risks.
+
+![Sample Output](Images/output.png)
+
+---
+
 ## Architecture
 
 ### Architecture Diagram
