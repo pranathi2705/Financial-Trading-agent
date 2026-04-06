@@ -45,7 +45,7 @@ The broader target architecture also includes memory, debate, risk management, t
 ### Architecture Diagram
 
 <!-- Insert architecture image here -->
-![Architecture Diagram](__path/to/architecture-image.png__)
+![Architecture Diagram](https://github.com/cs494-agentic-ai-spring-2026/group-project-code-submission-team10/blob/main/Images/Architecture%20Diagram.jpeg)
 
 ### High-Level Flow
 
