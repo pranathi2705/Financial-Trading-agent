@@ -6,7 +6,7 @@ Multi-Agent Trading Intelligence System
 
 - Sanjana Uppalike - suppa17
 - Pranathi Kamisetty - Pkami
-
+- Sai Teja Aggunna - Saggu
 
 ## Description
 
