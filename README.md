@@ -80,9 +80,9 @@ produces a provisional bias)
 │  │    Bull    │                   │    Bear    │        │
 │  │ Researcher │                   │ Researcher │        │
 │  └────────────┘                   └────────────┘        │
-│            ↓ (after debate ends)                        │
+│                        ↓ (after debate ends)            │
 │  ┌──────────────────────────────────────────────────┐   │
-│  │  Neutral Arbiter                                 │   │
+│  │                Neutral Arbiter                   │   │
 │  │  (reads final bull + bear output, scores         │   │
 │  │  argument quality, flags contradictions)         │   │
 │  └──────────────────────────────────────────────────┘   │
