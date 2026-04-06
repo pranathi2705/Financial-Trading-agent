@@ -59,7 +59,7 @@ Any publicly traded ticker supported by yfinance and Alpha Vantage will work.
 
 The system produces a structured synthesis report covering technical, fundamental, and news + sentiment signals, with a final market bias, confidence level, and key risks.
 
-![Sample Output](Images/output.png)
+![Sample Output](https://github.com/cs494-agentic-ai-spring-2026/group-project-code-submission-team10/blob/605a4163a81eae3f0b931e7fca4144da871183b6/Images/Output.jpeg)
 
 ---
 
