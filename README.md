@@ -236,48 +236,6 @@ Replace AAPL with any valid ticker symbol (e.g., TSLA, MSFT, NVDA, GOOG)
 ## 🔮 Future Implementations
 
 <details>
-<summary><b>Memory Agent</b></summary>
-
-- Retrieves past decisions and outcomes for the same ticker
-- Injects relevant historical context into the pipeline
-
-</details>
-
-<details>
-<summary><b>Debate Layer</b></summary>
-
-- Bull Researcher
-- Bear Researcher
-- Neutral Arbiter to score and resolve conflicting views
-
-</details>
-
-<details>
-<summary><b>Trader Agent</b></summary>
-
-- Converts synthesized reasoning into a final rating such as Buy, Hold, or Sell
-- Assigns a conviction score
-
-</details>
-
-<details>
-<summary><b>Risk Manager</b></summary>
-
-- Evaluates market regime and volatility conditions
-- Adjusts final recommendations based on risk context
-
-</details>
-
-<details>
-<summary><b>Reflection Agent</b></summary>
-
-- Evaluates post-decision outcomes after a fixed horizon
-- Generates post-mortem analysis
-- Updates long-term memory for future runs
-
-</details>
-
-<details>
 <summary><b>Persistence and API Layer</b></summary>
 
 - Decisions database
